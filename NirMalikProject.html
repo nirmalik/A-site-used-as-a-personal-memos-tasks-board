@@ -1,0 +1,226 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Amatic+SC|Open+Sans|Roboto|Tinos" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+    <h1>-*-*-*-*-*-*-*-*-*-*-*-*-*- Malik Board Task -*-*-*-*-*-*-*-*-*-*-*</h1>
+    <p class="marquee">
+        <span id="dtText"></span>
+    </p>
+
+    <div class="container-fluid">
+
+      
+
+        <div class="header">
+
+        </div>
+
+        <!-- main -->
+
+        <form>
+
+            <div class="form-group">
+
+                <label for="datetime-input">Date:</label>
+
+                <input class="form-control" type="date" id="date-input" value="2018-01-01" required>
+                <p id="dateE"></p>
+            </div>
+
+            <div class="form-group">
+
+                <label for="time-input">Time:</label>
+
+                <input class="form-control" type="time" id="time-input" value="00:00" required>
+                <p id="timeE"></p>
+            </div>
+
+            <div class="form-group has-error">
+
+                <label id="textLabel" for="exampleTextarea"> Enter Assignment:</label>
+
+                <textarea placeholder="Please Enter Your Task!" class="form-control" id="Textarea" rows="2" required></textarea>
+
+            </div>
+
+            <div class="form-group">
+                <input type="button" value="Save" class="btn btn-primary" id="save">
+                <p id="textE"></p>
+            </div>
+
+        </form>
+
+        <!-- store notes on row -->
+
+        <div class="row" id="taskList">
+
+
+        </div>
+
+    </div>
+
+</body>
+
+
+
+<script>
+    
+    var today = new Date();
+    document.getElementById('dtText').innerHTML = today; //get current date object and insert to inner marquee
+
+    (function () {
+
+        var localStorageKey = "tasks";
+
+        var localStorageCheck = "check";
+
+        
+        var getTasksFromCache = function () {
+          
+            var cachedTasks;
+            try {
+                cachedTasks = JSON.parse(localStorage.getItem(localStorageKey)) || [];
+            } catch (e) {
+                cachedTasks = [];
+            }
+            return cachedTasks;
+        }
+
+
+        var saveTasksToCache = function (tasksArray) {
+            return localStorage.setItem(localStorageKey, JSON.stringify(tasksArray));
+        }
+
+        
+
+        var main = function () {   // main function
+
+            var storageTasks = getTasksFromCache();
+
+        
+
+            var addTaskToDom = function (jsonTasks) {
+                var taskContent = jsonTasks.content;
+                var taskDate = jsonTasks.date;
+                var taskTime = jsonTasks.time;
+
+                var colDiv = document.createElement("div");
+                colDiv.setAttribute("class", "col-sm-3");
+
+
+                var elTaskCard = document.createElement("div");
+                elTaskCard.setAttribute("class", "col-notes");
+
+                var dateDiv = document.createElement("div");
+                dateDiv.setAttribute("class", "dateTimeDiv");
+
+                var elDueDate = document.createElement("h5");
+                elDueDate.setAttribute("class", "tDate");
+                elDueDate.innerHTML = taskDate + "<br/>" + taskTime;
+
+                var elTaskContent = document.createElement("p");
+                elTaskContent.setAttribute("class", "tContent");
+                elTaskContent.innerHTML = taskContent;
+
+                var glyphEl = document.createElement("span")
+                glyphEl.setAttribute("class", "glyphicon glyphicon-trash");
+
+        
+                glyphEl.addEventListener("click", function () {
+
+                    function fadeOutEffect(el) {
+                        el.style.opacity = "0";
+                        setTimeout(function () {
+                            el.parentNode.removeChild(el);
+                        }, 2000);
+                    }
+                                           
+                    var colD = glyphEl.parentNode.parentNode;
+                    fadeOutEffect(colD);
+
+                    var remove = function (array, element) {
+                        const index = array.indexOf(element);
+                        array.splice(index, 1);
+                    }
+                    remove(storageTasks, jsonTasks);
+                    saveTasksToCache(storageTasks);
+                })
+
+              
+
+                dateDiv.appendChild(elDueDate);
+                dateDiv.appendChild(glyphEl);
+                elTaskCard.appendChild(elTaskContent);
+                colDiv.appendChild(elTaskCard);
+                colDiv.appendChild(dateDiv);
+                document.querySelector("#taskList").appendChild(colDiv);
+
+            }
+
+            for (var j = 0; j < storageTasks.length; j++) {
+                addTaskToDom(storageTasks[j]);
+            }
+
+
+            var saveBtn = document.querySelector("#save");
+
+            saveBtn.addEventListener("click", function () {
+
+                var jsonContent = document.getElementById("Textarea");
+                var taskDate = document.getElementById("date-input");
+                var taskTime = document.getElementById("time-input");
+                var timeE = document.getElementById("timeE");
+                var dateE = document.getElementById("dateE");
+                var textE = document.getElementById("textE");
+            
+
+                if (!jsonContent.checkValidity()) {
+
+                    textE.style.display = "block";
+                    textE.innerHTML = jsonContent.validationMessage;
+
+                } else if (!taskDate.checkValidity()) {
+
+                    dateE.style.display = "block";
+                    dateE.innerHTML = taskDate.validationMessage;
+
+                } else if (!taskTime.checkValidity()) {
+
+                    timeE.style.display = "block";
+                    timeE.innerHTML = taskTime.validationMessage;
+
+                }
+                else {
+                    
+                    textE.style.display = "none";
+                    dateE.style.display = "none";
+                    timeE.style.display = "none";
+
+                    
+
+                    var jsonTasks = { "content": jsonContent.value, "date": taskDate.value, "time": taskTime.value }
+                    storageTasks.push(jsonTasks);
+                    saveTasksToCache(storageTasks);
+                    addTaskToDom(jsonTasks);
+                    document.getElementById("Textarea").value = "";
+                    document.getElementById("date-input").value = "";
+                    document.getElementById("time-input").value = "";
+                }
+            })
+        }
+        main();
+    })();
+
+</script>
+</html>

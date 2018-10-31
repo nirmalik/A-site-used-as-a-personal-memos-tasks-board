@@ -1,0 +1,251 @@
+/* background to the page */
+body, html {
+    background-image: url("Images/tile.jpg");
+    width:100%;
+    height:100%;
+
+}
+
+.header {
+    background-image: url("Images/title.png");
+    width:300px;
+    height:50px;
+    margin:0px auto;
+}
+
+form {
+    font-weight: bold;  
+    background-image: url("Images/formbg.jpg"); 
+    margin:0px auto;
+    width:600px;
+    height:400px; 
+    font-family: 'Roboto', sans-serif;    
+    border-width: 5px 5px 5px 5px;
+   
+}
+
+
+
+@media only screen and (max-width: 800px) {
+    form {
+        width:100%;
+    }
+   
+}
+
+Label {
+    font-size: 18px;
+    margin:23px 0 0 80px;   
+}
+
+#date-input, #time-input {
+    background-color:rgba(0, 0, 0, 0);
+    margin:0px 0px 0px 50px;
+    width:300px;
+    border: none;
+    outline:none;
+}
+
+#Textarea {
+    font-size:16px;
+    line-height:25px;
+    background-color:rgba(153, 185, 155, 0.315);
+    width:500px;
+    margin-left:65px;
+    color:rgb(238, 8, 8);
+    border:none;
+    overflow: auto; 
+    outline:0px none transparent;   
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+  
+}
+
+.btn-primary {
+    margin-top:-5px;
+    float:right;
+    width:90px;
+}
+
+.row {
+    flex-direction: column;  
+  
+}
+
+.col-sm-3 {   
+    background-repeat: no-repeat;       
+    background:url("Images/notebg.png");   
+    width:200px;
+    margin:100px;    
+    height:250px;
+    opacity:1;
+    -webkit-transition: opacity 1500ms linear;
+    transition: opacity 1500ms linear;
+    -webkit-animation: mymove 3s ; 
+    animation: mymove 3s forwards, myOpacity 3s linear;
+    animation-iteration-count: 1;
+    -webkit-animation: mymove 3s;
+    -webkit-animation:mymove 3s forwards, myOpacity 3s linear; 
+    -moz-animation:mymove 3s forwards, myOpacity 3s linear;  
+}
+
+.glyphicon {
+    opacity:0;
+    color:rgb(23, 42, 211);
+    position:absolute;
+    top:-5px;
+    left:100px;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.col-sm-3:hover .glyphicon {
+    opacity:1;
+}
+
+.col-sm-3 .glyphicon:hover {
+    color:black;
+   }
+
+   .glyphicon:hover .col-sm-3 {
+    height:550px;
+    width:520px;
+   }
+
+@keyframes mymove {
+    from { left: 0px;}
+    to { left: 100px;}  
+}
+
+
+@-moz-keyframes myOpacity {
+    from {opacity:0;}
+    to {opacity:1;}  
+}
+
+@-webkit-keyframes mymove {
+    from { left: 0px;}
+    to { left: 100px;}  
+}
+
+@-webkit-keyframes myOpacity {
+    from {opacity:0;}
+    to {opacity:1;}  
+}
+@keyframes myOpacity {
+    from { opacity:0;}
+    to { opacity:1;}  
+}
+
+@-moz-keyframes mymove {
+    from { left: 0px;}
+    to { left: 100px;}  
+}
+
+
+.col-notes {    
+    margin-top:20px;
+    display: inline-block;  
+    height:180px;  
+    overflow-x: hidden;
+    overflow-y: auto; 
+}
+
+.tContent {
+    margin-top:30px;
+    width:160px;  
+}
+
+.dateTimeDiv {
+    position:relative;
+    width:100%;
+    height:70px;
+
+}
+
+.p
+{
+    font-family: 'Tinos', serif;
+    font-size:22px;
+    line-height:25px;
+    word-wrap:break-word;
+}
+
+
+
+.marquee {
+    float:left; 
+    white-space: nowrap;
+    overflow: hidden;
+    box-sizing: border-box;
+    color:black;
+    font-size:21px;
+ }
+ 
+ .marquee span {
+    display: inline-block;
+    padding-left: 100%;
+    text-indent: 0;
+    animation: marquee 10s linear infinite;
+ }
+ 
+ .marquee span:hover {
+     animation-play-state: paused
+ }
+
+ 
+ @keyframes marquee {
+     0%   { transform: translate(0, 0); }
+     100% { transform: translate(-100%, 0); }
+ }
+ 
+ @media only screen and (max-width: 650px) {
+    .marquee {
+        display:none;
+    }
+   
+}
+
+ @media only screen and (min-width: 651px) {
+    .marquee {
+        width:25%;
+    } 
+}
+
+
+.form-group {
+    position:relative;
+}
+
+#textE {
+    position:absolute;
+    font-size:18px;
+    top:34px;
+    left:420px;
+    color:blue;
+}
+
+
+#timeE {
+
+    position:absolute;
+    font-size:18px;
+    color:blue;
+    bottom:25px;
+    left:420px;
+
+}
+
+#dateE {
+    position:absolute;
+    font-size:18px;
+    top:53px;
+    left:420px;
+    color:blue;
+}
+
+
+
+
+
